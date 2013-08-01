@@ -6,8 +6,10 @@ function love.load()
 	mapwidth = 15
 	windowheight = 160
 	windowwidth = 240
-	startXPos = 1 --temp
-	startYPos = 1 --temp
+	startXPos = 9 --temp
+	startYPos = 5 --temp
+	mapLoaded = false
+	cT = {} -- Current Terrain
 	love.graphics.setMode(windowwidth,windowheight,false,false,0)
 	--[[
 		load save
@@ -17,6 +19,10 @@ function love.load()
 		render world
 		render NPCs
 	--]]
+	getSaveData()
+	loadTileSetImage()
+	loadQuads()
+	getMapData(saveData[1] .. ".lua")
 end
 
 function love.update()
@@ -24,9 +30,11 @@ function love.update()
 end
 
 function love.draw()
-	for a = 1, #cT do -- draw the ground
-		for b = 1, #cT[a] do
-			love.graphics.drawq(tileset, quads[cT[a][b]], (b-1)*w,(a-1)*h)
+	if mapLoaded then --"error: attempt to index global cT a nil value
+		for a = startXPos, startXPos + 14 do -- draw the ground
+			for b = startYPos, startYPos + 9 do
+				love.graphics.drawq(tileset, quads[cT[a][b]], (b-1)*w,(a-1)*h)
+			end
 		end
 	end
 end
@@ -47,6 +55,7 @@ end
 
 ---------------------------------------
 function getMapData(file)
+	--[[
 	rawMapFileData = {}
 	for lines in love.filesystem.lines(file) do
 		table.insert(rawMapFileData, lines)
@@ -55,11 +64,14 @@ function getMapData(file)
 		cT[i] = {}
 		cT[i] = split(rawMapFileData[i], ",")
 	end
+	--]]
+	cT = file.data
+	mapLoaded = true
 end
 ---------------------------------------
 function getSaveData()
 	saveData = {}
-	for lines in love.filesystem.lines(save.save) do
+	for lines in love.filesystem.lines("save.save") do
 		table.insert(saveData, lines)
 	end
 end
