@@ -20,9 +20,9 @@ function love.load()
 		render NPCs
 	--]]
 	getSaveData()
+	getMapData(saveData[1] .. ".lua")
 	loadTileSetImage()
 	loadQuads()
-	getMapData(saveData[1] .. ".lua")
 end
 
 function love.update()
@@ -30,11 +30,15 @@ function love.update()
 end
 
 function love.draw()
-	if mapLoaded then --"error: attempt to index global cT a nil value
-		for a = startXPos, startXPos + 14 do -- draw the ground
-			for b = startYPos, startYPos + 9 do
-				love.graphics.drawq(tileset, quads[cT[a][b]], (b-1)*w,(a-1)*h)
+	if mapLoaded then --"error: attempt to index global cT (a nil value) WHY???
+		local c = 0
+		for a = startYPos, startYPos + 9 do -- draw the ground
+			local d = 0
+			for b = startXPos, startXPos + 14 do
+				love.graphics.drawq(tileset, quads[cT[a][b]], (d)*size,(c)*size)
+				if d < 14 then d = d + 1 else d = 0 end
 			end
+			if c < 9 then c = c + 1 else c = 0 end
 		end
 	end
 end
@@ -55,18 +59,10 @@ end
 
 ---------------------------------------
 function getMapData(file)
-	--[[
-	rawMapFileData = {}
-	for lines in love.filesystem.lines(file) do
-		table.insert(rawMapFileData, lines)
-	end
-	for i = 1, #rawMapFileData do
-		cT[i] = {}
-		cT[i] = split(rawMapFileData[i], ",")
-	end
-	--]]
-	cT = file.data
+	map = require(saveData[1])
+	cT = terrain
 	mapLoaded = true
+
 end
 ---------------------------------------
 function getSaveData()
@@ -77,7 +73,7 @@ function getSaveData()
 end
 ---------------------------------------
 function loadTileSetImage()
-	tileset = love.graphics.newImage(saveData[1] .. " tileset.png")
+	tileset = love.graphics.newImage(image)
 end
 
 ---------------------------------------
