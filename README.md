@@ -16,3 +16,7 @@ To run:
 PS: Don't just put everything in a folder and compress it. You need to compress the actual files, or you'll get an error.
   
 You need Lua and LOVE installed for this to work, plebs.
+
+License: LGPL http://www.gnu.org/licenses/lgpl.html
+
+Pls contribute
