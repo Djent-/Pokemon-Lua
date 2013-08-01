@@ -1,6 +1,7 @@
 function love.load()
 	require "gamedata" --for the sake of abstraction
 	loadFont()
+	timer = 0
 	size=16
 	mapheight = 10
 	mapwidth = 15
@@ -24,7 +25,7 @@ function love.load()
 end
 ---------------------------------------
 function love.update()
-
+	getKeyBoardInput()
 end
 ---------------------------------------
 function love.draw()
@@ -48,7 +49,30 @@ function love.draw()
 end
 ---------------------------------------
 function getKeyBoardInput()
-
+	if love.keyboard.isDown("w") then
+		if love.timer.getTime() - timer > .25 then
+			saveData[2] = saveData[2] - 1
+			timer = love.timer.getTime()
+		end
+	end
+	if love.keyboard.isDown("a") then
+		if love.timer.getTime() - timer > .25 then
+			saveData[3] = saveData[3] - 1
+			timer = love.timer.getTime()
+		end
+	end
+	if love.keyboard.isDown("s") then
+		if love.timer.getTime() - timer > .25 then
+			saveData[2] = saveData[2] + 1
+			timer = love.timer.getTime()
+		end
+	end
+	if love.keyboard.isDown("d") then
+		if love.timer.getTime() - timer > .25 then
+			saveData[3] = saveData[3] + 1
+			timer = love.timer.getTime()
+		end
+	end
 end
 ---------------------------------------
 function getMapData() --relies on getSaveData()

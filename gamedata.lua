@@ -9,3 +9,10 @@ function loadFont()
 	love.graphics.setFont(font)
 end
 ---------------------------------------
+function gameUpdate()
+
+end
+
+function gameDraw() --for cutscenes, etc
+
+end
