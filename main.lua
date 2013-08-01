@@ -1,13 +1,11 @@
 function love.load()
 	loadFont()
-	split = require "stringsplit"
+	split = require "stringsplit" --unused
 	size=16
 	mapheight = 10
 	mapwidth = 15
 	windowheight = 160
 	windowwidth = 240
-	startXPos = 9 --temp
-	startYPos = 5 --temp
 	mapLoaded = false
 	cT = {} -- Current Terrain
 	love.graphics.setMode(windowwidth,windowheight,false,false,0)
@@ -20,21 +18,21 @@ function love.load()
 		render NPCs
 	--]]
 	getSaveData()
-	getMapData(saveData[1] .. ".lua")
+	getMapData()
 	loadTileSetImage()
 	loadQuads()
 end
-
+---------------------------------------
 function love.update()
 
 end
-
+---------------------------------------
 function love.draw()
-	if mapLoaded then --"error: attempt to index global cT (a nil value) WHY???
-		local c = 0
-		for a = startYPos, startYPos + 9 do -- draw the ground
+	if mapLoaded then
+	local c = 0
+		for a = saveData[2], saveData[2] + 9 do -- draw the ground
 			local d = 0
-			for b = startXPos, startXPos + 14 do
+			for b = saveData[3], saveData[3] + 14 do
 				love.graphics.drawq(tileset, quads[cT[a][b]], (d)*size,(c)*size)
 				if d < 14 then d = d + 1 else d = 0 end
 			end
@@ -42,10 +40,11 @@ function love.draw()
 		end
 	end
 end
+---------------------------------------
 function getKeyBoardInput()
 
 end
-
+---------------------------------------
 function loadFont()
 	font = love.graphics.newImageFont("Pokefont 10px.png",
 	" ABCDEFGHIJKLMNOPQRSTUVWXYZ"..
@@ -58,26 +57,26 @@ function loadFont()
 end
 
 ---------------------------------------
-function getMapData(file)
+function getMapData() --relies on getSaveData()
 	map = require(saveData[1])
-	cT = terrain
+	cT = terrain --terrain is a table in the map file
 	mapLoaded = true
 
 end
 ---------------------------------------
-function getSaveData()
+function getSaveData() --called first
 	saveData = {}
 	for lines in love.filesystem.lines("save.save") do
 		table.insert(saveData, lines)
 	end
 end
 ---------------------------------------
-function loadTileSetImage()
-	tileset = love.graphics.newImage(image)
+function loadTileSetImage() --relies on getMapData()
+	tileset = love.graphics.newImage(image) --image is part of the data in the map file
 end
 
 ---------------------------------------
-function loadQuads()
+function loadQuads() --relies on loadTileSetImage()
 	quads = {}
 	local datah = tileset:getHeight()
 	local dataw = tileset:getWidth()
