@@ -7,8 +7,11 @@ function love.load()
 	mapwidth = 15
 	windowheight = 160
 	windowwidth = 240
-	mapLoaded = false
+	drawOverride = true
 	cT = {} -- Current Terrain
+	cD = {} -- Current Data (solid, nonsolid blocks)
+	nT = {} -- Next Terrain (from load tiles)
+	nD = {} -- Next Data
 	love.graphics.setMode(windowwidth,windowheight,false,false,0)
 	--[[
 		load save
@@ -29,7 +32,7 @@ function love.update()
 end
 ---------------------------------------
 function love.draw()
-	if mapLoaded then
+	if not drawOverride then
 		local c = 0
 		for a = saveData[2], saveData[2] + 9 do -- draw the ground
 			local d = 0
@@ -78,7 +81,7 @@ end
 function getMapData() --relies on getSaveData()
 	map = require(saveData[1])
 	cT = terrain --terrain is a table in the map file
-	mapLoaded = true
+	drawOverride = false
 
 end
 ---------------------------------------
