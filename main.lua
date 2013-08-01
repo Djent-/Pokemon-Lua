@@ -1,6 +1,5 @@
 function love.load()
 	loadFont()
-	split = require "stringsplit" --unused
 	size=16
 	mapheight = 10
 	mapwidth = 15
