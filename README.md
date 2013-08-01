@@ -20,3 +20,5 @@ You need Lua and LOVE installed for this to work, plebs.
 License: LGPL http://www.gnu.org/licenses/lgpl.html
 
 Pls contribute
+
+OSX download as of 8.1.13 1:57PM EST: https://mega.co.nz/#!XYNgBByA!b5_7_H5qT2LeBwb8EFjuujaEqncxCi9dmK-nFWChE5g
