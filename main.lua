@@ -1,4 +1,5 @@
 function love.load()
+	require "gamedata" --for the sake of abstraction
 	loadFont()
 	size=16
 	mapheight = 10
@@ -28,7 +29,7 @@ end
 ---------------------------------------
 function love.draw()
 	if mapLoaded then
-	local c = 0
+		local c = 0
 		for a = saveData[2], saveData[2] + 9 do -- draw the ground
 			local d = 0
 			for b = saveData[3], saveData[3] + 14 do
@@ -37,24 +38,18 @@ function love.draw()
 			end
 			if c < 9 then c = c + 1 else c = 0 end
 		end
+		--[[
+		get quads of character animations
+		draw character
+			draw at (screenheight/2, screenwidth/2) offset (-spriteheight/2, -spritewidth/2)
+		if an animation occurs, display the frames (quads) in sequence
+		--]]
 	end
 end
 ---------------------------------------
 function getKeyBoardInput()
 
 end
----------------------------------------
-function loadFont()
-	font = love.graphics.newImageFont("Pokefont 10px.png",
-	" ABCDEFGHIJKLMNOPQRSTUVWXYZ"..
-	"abcdefghijklmnopqrstuvwxyz"..
-	"0123456789!?-.~`*/&+@=;$\"^'_".. -- '~' = boy sign, '`' (grave) = girl sign
-	"()%\\|<#" --'\' = c with the dangle, '|' (pipe) = PP, '<' = ID, '#' = No
-					--'@' = Lv, '^' = end double quote, '_' = end single quote
-	)
-	love.graphics.setFont(font)
-end
-
 ---------------------------------------
 function getMapData() --relies on getSaveData()
 	map = require(saveData[1])
@@ -71,7 +66,7 @@ function getSaveData() --called first
 end
 ---------------------------------------
 function loadTileSetImage() --relies on getMapData()
-	tileset = love.graphics.newImage(image) --image is part of the data in the map file
+	tileset = love.graphics.newImage(image) --image is variable in the data in the map file
 end
 
 ---------------------------------------
