@@ -6,6 +6,8 @@ function love.load()
 	mapwidth = 15
 	windowheight = 160
 	windowwidth = 240
+	startXPos = 1 --temp
+	startYPos = 1 --temp
 	love.graphics.setMode(windowwidth,windowheight,false,false,0)
 	--[[
 		load save
@@ -27,6 +29,9 @@ function love.draw()
 			love.graphics.drawq(tileset, quads[cT[a][b]], (b-1)*w,(a-1)*h)
 		end
 	end
+end
+function getKeyBoardInput()
+
 end
 
 function loadFont()
