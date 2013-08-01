@@ -59,6 +59,11 @@ function getSaveData()
 	end
 end
 ---------------------------------------
+function loadTileSetImage()
+	tileset = love.graphics.newImage(saveData[1] .. " tileset.png")
+end
+
+---------------------------------------
 function loadQuads()
 	quads = {}
 	local datah = tileset:getHeight()
@@ -77,6 +82,6 @@ function loadQuads()
 		end
 	end
 	for _ = 1, #quada do
-		quads[_] = love.graphics.newQuad(quada[_][2],quada[_][3],w,h,sw,sh)
+		quads[_] = love.graphics.newQuad(quada[_][2],quada[_][3],size,size,dataw,datah)
 	end
 end
