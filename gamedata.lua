@@ -9,10 +9,18 @@ function loadFont()
 	love.graphics.setFont(font)
 end
 ---------------------------------------
+function gameLoad()
+	initializeMainTable(750, 550)
+end
+---------------------------------------
 function gameUpdate()
 
 end
-
+---------------------------------------
 function gameDraw() --for cutscenes, etc
 
 end
+--[[
+	I really want to make a game class with Update and Draw as methods
+	OOP is my weakness
+--]]

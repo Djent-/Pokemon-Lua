@@ -2,12 +2,12 @@ function love.load()
 	require "gamedata" --for the sake of abstraction
 	loadFont()
 	timer = 0
-	size=16
-	mapheight = 10
+	size=16 --tile height and width, no use for separate variables
+	mapheight = 10 -- screenheight would probably be a better name - in tiles
 	mapwidth = 15
 	windowheight = 160
 	windowwidth = 240
-	drawOverride = true
+	drawOverride = true --for switching between engine and specialized methods
 	cT = {} -- Current Terrain
 	cD = {} -- Current Data (solid, nonsolid blocks)
 	nT = {} -- Next Terrain (from load tiles)
@@ -25,6 +25,7 @@ function love.load()
 	getMapData()
 	loadTileSetImage()
 	loadQuads()
+	gameLoad() --from require "gamedata"
 end
 ---------------------------------------
 function love.update()
@@ -79,6 +80,7 @@ function getKeyBoardInput()
 end
 ---------------------------------------
 function getMapData() --relies on getSaveData()
+	-- this needs to be updated to orient maps in the main table (mT)
 	map = require(saveData[1])
 	cT = terrain --terrain is a table in the map file
 	drawOverride = false
@@ -98,6 +100,10 @@ end
 
 ---------------------------------------
 function loadQuads() --relies on loadTileSetImage()
+	--this assumes there is one tileset image and does not allow for more
+	--each map needs a loadQuads() then
+	--I'll leave this in for the engine, because other games might find it useful
+
 	quads = {}
 	local datah = tileset:getHeight()
 	local dataw = tileset:getWidth()
@@ -116,5 +122,17 @@ function loadQuads() --relies on loadTileSetImage()
 	end
 	for _ = 1, #quada do
 		quads[_] = love.graphics.newQuad(quada[_][2],quada[_][3],size,size,dataw,datah)
+	end
+end
+----------------------------------------
+function initializeMainTable(xsize, ysize)
+	--http://love2d.org/forums/memberlist.php?mode=viewprofile&u=79341
+	-- Idea from adekto
+	mT = {}
+	for y = 1, ysize do
+		mT[y] = {}
+		for x = 1, xsize do
+			mT[y][x] = 0
+		end
 	end
 end
